@@ -58,7 +58,7 @@ void callback(const depthai_ros_msgs::SpatialDetectionArray::ConstPtr& detection
       for(int d_num =0; d_num < detectionArray->detections.size(); d_num ++){
         // int labelIndex = std::stoi(detectionArray->detections.at(d_num).results.at(0).id);
         int labelIndex = int(detectionArray->detections.at(d_num).results.at(0).id);
-        std::cerr<<  detectionArray->detections.at(d_num).results.at(0).id<< std::endl;
+        // std::cerr<<  detectionArray->detections.at(d_num).results.at(0).id<< std::endl;
         std::string labelStr = std::to_string(labelIndex);
         if(labelIndex < labelMap.size()) {
                 labelStr = labelMap[labelIndex];
