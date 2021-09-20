@@ -74,8 +74,20 @@ void callback(const depthai_ros_msgs::SpatialDetectionArray::ConstPtr& detection
         // float pos_x = float( detectionArray->detections.at(d_num).position.x);
         // float pos_y = float(detectionArray->detections.at(d_num).position.y);
         // float pos_z = float(detectionArray->detections.at(d_num).position.z);
-        cv::Point pt1(center_x-half_size_x,center_y-half_size_y);
-        cv::Point pt2(center_x+half_size_x,center_y+half_size_y);
+        int xmin = floor((center_x-half_size_x));//stereo_w
+        int ymin = floor((center_y-half_size_y));//stereo_h
+        int xmax = floor((center_x+half_size_x));//stereo_w
+        int ymax = floor((center_y+half_size_y));//stereo_h
+        // Make sure x and y min and max are in range of 416x234 image
+        xmin = xmin >= 0 ? xmin : 0;
+        ymin = ymin >= 91 ? ymin : 91;
+        xmax = xmax <= 416 ? xmax : 416;
+        ymax = ymax <= 325 ? ymax : 325;
+  
+        // cv::Point pt1(center_x-half_size_x,center_y-half_size_y);
+        // cv::Point pt2(center_x+half_size_x,center_y+half_size_y);
+        cv::Point pt1(xmin,ymin);
+        cv::Point pt2(xmax,ymax);
         cv::rectangle(cv_ptr->image, pt1,pt2,CV_RGB(255,0,0));
         // cv::putText(cv_ptr->image, "Stairs", pt1, cv::FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1, cv::LINE_AA);
         
